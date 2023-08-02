@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,13 @@ import lombok.Setter;
 @Data
 @Entity
 @Table(name="conversion")
-@Getter @Setter @NoArgsConstructor
+@Getter 
+@Setter 
+@NoArgsConstructor
+@AllArgsConstructor
 public class Conversion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "conversion_id")
     private UUID id;
     
     private BigDecimal rate;
@@ -33,15 +36,5 @@ public class Conversion {
     
     @Column(unique=true)
     private String symbol;
-
-
-    public Conversion(UUID id, BigDecimal rate, BigDecimal rateOnPreviousClose, LocalDateTime madeAt, String symbol) {
-        this.id = id;
-        this.rate = rate;
-        this.rateOnPreviousClose = rateOnPreviousClose;
-        this.madeAt = madeAt;
-        this.symbol = symbol;
-    }
-
-    
+ 
 }

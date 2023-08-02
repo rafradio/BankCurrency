@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,13 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name="limit")
-@Getter @Setter @NoArgsConstructor
+@Getter 
+@Setter 
+@NoArgsConstructor
+@AllArgsConstructor
 public class Limit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "limit_id")
     private Long id;
     
     private LocalDateTime created;
@@ -46,16 +48,4 @@ public class Limit {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "limit")
     private List<Transaction> transactions;
     
-
-    public Limit(Long id, LocalDateTime created, BigDecimal sum, BigDecimal remaining, String currencyShortname, String expenseCategory, Client client, List<Transaction> transactions) {
-        this.id = id;
-        this.created = created;
-        this.sum = sum;
-        this.remaining = remaining;
-        this.currencyShortname = currencyShortname;
-        this.expenseCategory = expenseCategory;
-        this.client = client;
-        this.transactions = transactions;
-    }
-
 }

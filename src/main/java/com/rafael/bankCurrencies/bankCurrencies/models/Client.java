@@ -9,23 +9,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import java.time.Instant;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
-@Table(name="client")
-@Getter @Setter @NoArgsConstructor
+@Getter 
+@Setter 
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id")
-    private long id;
+    private Long id;
     
-    private LocalDateTime created;
+    @CreationTimestamp
+    private Instant created;
     
     @Column(unique=true, length=10)
     private String bankAccountNumber;
@@ -35,14 +39,5 @@ public class Client {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Limit> limits;
-    
-
-    public Client(Long id, LocalDateTime created, String bankAccountNumber, List<Transaction> transactions, List<Limit> limits) {
-        this.id = id;
-        this.created = created;
-        this.bankAccountNumber = bankAccountNumber;
-        this.transactions = transactions;
-        this.limits = limits;
-    }
 
 }

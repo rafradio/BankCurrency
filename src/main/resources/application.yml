@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/BankCurrencies
+    url: jdbc:postgresql://localhost:5432/BankValuta
     username: postgres
     password: 7783Rafraikk@
   liquibase:

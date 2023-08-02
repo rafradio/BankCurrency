@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +17,13 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name="transaction")
-@Getter @Setter @NoArgsConstructor
+@Getter 
+@Setter 
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_id")
     private Long id;
     
     private LocalDateTime created;
@@ -39,7 +40,7 @@ public class Transaction {
     
     private String expenseCategory;
     
-    private boolean exceeded;
+    private Boolean exceeded;
     
     @ManyToOne
     @JoinColumn(name="client_id")
@@ -48,19 +49,5 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name="limit_id")
     private Limit limit;
-
-    public Transaction(Long id, LocalDateTime created, String accountFrom, String accountTo, BigDecimal sum, String currencyShortname, String expenseCategory, boolean exceeded, Client client, Limit limit) {
-        this.id = id;
-        this.created = created;
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.sum = sum;
-        this.currencyShortname = currencyShortname;
-        this.expenseCategory = expenseCategory;
-        this.exceeded = exceeded;
-        this.client = client;
-        this.limit = limit;
-    }
-
     
 }
