@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Data
 @Entity
 @Getter 
 @Setter 
@@ -29,7 +28,7 @@ public class Client {
     private Long id;
     
     @CreationTimestamp
-    private Instant created;
+    private LocalDateTime created;
     
     @Column(unique=true, length=10)
     private String bankAccountNumber;

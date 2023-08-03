@@ -1,9 +1,15 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/BankValuta
-    username: postgres
-    password: 7783Rafraikk@
+    postgres:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/BankValuta
+        username: postgres
+        password: 7783Rafraikk@
+    mysql:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/digitalmigrate
+        username: root
+        password: 7783Rafraikk@
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 
