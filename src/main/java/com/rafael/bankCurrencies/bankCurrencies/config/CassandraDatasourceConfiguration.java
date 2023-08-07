@@ -4,14 +4,13 @@ package com.rafael.bankCurrencies.bankCurrencies.config;
 //import org.springframework.boot.context.properties.ConfigurationProperties;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-////import org.springframework.context.annotation.Primary;
-//
+
 //@Configuration
-//public class MysqlDatasourceConfiguration {
-//    @Bean(name="mysqlDB")
-//    @ConfigurationProperties("spring.datasource.mysql")
-//    public DataSourceProperties mysqlDataSourceProperties() {
-//        System.out.println("New world");
+//public class CassandraDatasourceConfiguration {
+//    @Bean(name="cassandraDB")
+//    @ConfigurationProperties("spring.data.cassandra")
+//    public DataSourceProperties cassandraDataSourceProperties() {
+//        System.out.println("Cassandra world");
 //        return new DataSourceProperties();
 //    }
 //}

@@ -2,14 +2,17 @@ spring:
   datasource:
     postgres:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/BankValuta
+        url: jdbc:postgresql://172.20.10.2:6432/bank
         username: postgres
-        password: 7783Rafraikk@
-    mysql:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/digitalmigrate
-        username: root
-        password: 7783Rafraikk@
+        password: postgres
+#  data:
+#    cassandra:
+#        schema-action: CREATE_IF_NOT_EXISTS
+#        request:
+#            timeout: 10s
+#        connection:
+#            connect-timeout: 10s
+#            init-query-timeout: 10s
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 
