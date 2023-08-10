@@ -1,4 +1,4 @@
-package com.rafael.bankCurrencies.bankCurrencies.controllers;
+package com.rafael.bankCurrencies.bankCurrencies;
 
 import com.rafael.bankCurrencies.bankCurrencies.models.Client;
 import com.rafael.bankCurrencies.bankCurrencies.models.Limit;
@@ -13,7 +13,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.notification.Failure; 
 
 @Component
-public class MainController {
+public class AnotherController {
     @EventListener(ApplicationReadyEvent.class)
     public void runAfterStartup() {
         System.out.println("Yaaah, I am running........");
@@ -26,4 +26,5 @@ public class MainController {
 //        System.out.println(result.wasSuccessful()); 
         
     }
+    
 }

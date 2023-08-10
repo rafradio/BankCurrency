@@ -1,4 +1,4 @@
-package com.rafael.bankCurrencies.bankCurrencies.config;
+package com.rafael.bankCurrencies.bankCurrencies;
 
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;

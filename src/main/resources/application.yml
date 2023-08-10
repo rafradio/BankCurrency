@@ -7,12 +7,17 @@ spring:
         password: postgres
 #  data:
 #    cassandra:
+#        keyspace-name: spring_cassandra
+#        contact-points: 172.20.10.2
+#        port: 9042
+#        local-datacenter: datacenter1
 #        schema-action: CREATE_IF_NOT_EXISTS
-#        request:
-#            timeout: 10s
-#        connection:
+#        request.timeout: 10s
+#        connection: 
 #            connect-timeout: 10s
 #            init-query-timeout: 10s
+#        username: cassandra
+#        password: cassandra
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 

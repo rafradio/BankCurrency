@@ -1,6 +1,6 @@
 package com.rafael.bankCurrencies.bankCurrencies;
 
-import com.rafael.bankCurrencies.bankCurrencies.config.BankConfig;
+//import com.rafael.bankCurrencies.bankCurrencies.config.BankConfig;
 import com.rafael.bankCurrencies.bankCurrencies.models.Client;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
