@@ -1,7 +1,7 @@
 spring:
   cassandra:
-    contact-points: 172.20.10.2
-    port: 9142
+    contact-points: 127.0.0.1
+    port: 9042
     localDatacenter: datacenter1
     keyspace-name: spring_cassandra
     schema-action: CREATE_IF_NOT_EXISTS
@@ -14,7 +14,7 @@ spring:
   datasource:
     postgres:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://172.20.10.2:6432/bank
+      url: jdbc:postgresql://127.0.0.1:6432/bank
       username: postgres
       password: postgres
   liquibase:
