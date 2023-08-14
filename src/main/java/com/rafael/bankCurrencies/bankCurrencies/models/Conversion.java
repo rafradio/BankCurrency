@@ -1,29 +1,24 @@
 package com.rafael.bankCurrencies.bankCurrencies.models;
 
+import jakarta.persistence.Column;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+//import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Entity
-@Table(name="conversion")
+@Table
 @Getter 
 @Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 public class Conversion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private UUID id;
     
     private BigDecimal rate;
@@ -35,5 +30,5 @@ public class Conversion {
     
     @Column(unique=true)
     private String symbol;
- 
+    
 }

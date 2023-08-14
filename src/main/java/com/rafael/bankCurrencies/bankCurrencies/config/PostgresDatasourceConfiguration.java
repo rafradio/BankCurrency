@@ -9,9 +9,8 @@ import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class PostgresDatasourceConfiguration {
-    
-    @Bean(name="postgresDB")
     @Primary
+    @Bean(name="postgresDB")
     @ConfigurationProperties("spring.datasource.postgres")
     public DataSourceProperties postgresDataSourceProperties() {
         System.out.println("Hello world");

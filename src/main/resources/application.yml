@@ -1,23 +1,22 @@
 spring:
+  cassandra:
+    contact-points: 172.20.10.2
+    port: 9142
+    localDatacenter: datacenter1
+    keyspace-name: spring_cassandra
+    schema-action: CREATE_IF_NOT_EXISTS
+    request.timeout: 10s
+#    username: cassandra
+#    password: cassandra
+    connection: 
+        connect-timeout: 10s
+        init-query-timeout: 10s
   datasource:
     postgres:
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://172.20.10.2:6432/bank
-        username: postgres
-        password: postgres
-#  data:
-#    cassandra:
-#        keyspace-name: spring_cassandra
-#        contact-points: 172.20.10.2
-#        port: 9042
-#        local-datacenter: datacenter1
-#        schema-action: CREATE_IF_NOT_EXISTS
-#        request.timeout: 10s
-#        connection: 
-#            connect-timeout: 10s
-#            init-query-timeout: 10s
-#        username: cassandra
-#        password: cassandra
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://172.20.10.2:6432/bank
+      username: postgres
+      password: postgres
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 
