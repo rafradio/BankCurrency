@@ -11,13 +11,13 @@ public class DatabasesDatasourceConfiguration {
     @Primary
     @Bean
     @ConfigurationProperties("spring.datasource.postgres")
-    public DataSourceProperties postgresDataSourceProperties() {
+    public DataSourceProperties postgresDataSourceProperties () {
         return new DataSourceProperties();
     }
     
     @Bean
     @ConfigurationProperties("spring.cassandra")
-    public DataSourceProperties cassandraDataSourceConfiguration() {
+    public DataSourceProperties cassandraDataSourceProperties() {
         return new DataSourceProperties();
     }
 }
