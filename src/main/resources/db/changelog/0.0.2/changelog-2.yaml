@@ -1,0 +1,44 @@
+databaseChangeLog:  
+  -  changeSet:  
+      id:  1  
+      author:  rafael  
+      changes:  
+        -  createTable:  
+            tableName:  limit  
+            columns:  
+              -  column:  
+                  name:  id  
+                  type:  bigint  
+                  autoIncrement:  true  
+                  constraints:  
+                    primaryKey:  true  
+                    nullable:  false  
+              -  column:  
+                  name:  created  
+                  type:  timestamp 
+              -  column:  
+                  name:  sum  
+                  type:  numeric
+              -  column:  
+                  name:  remaining  
+                  type:  numeric
+              -  column:  
+                  name:  currency_shortname  
+                  type:  varchar
+              -  column:  
+                  name:  expense_category  
+                  type:  varchar
+              -  column:  
+                  name:  client_id  
+                  type:  bigint
+                  constraints:   
+                    nullable:  false 
+        -  addForeignKeyConstraint:
+            baseTableName: limit
+            baseColumnNames: client_id
+            referencedTableName: client
+            referencedColumnNames: id
+            constraintName: client_limit_fk
+            onDelete:  CASCADE  
+            onUpdate:  CASCADE
+
