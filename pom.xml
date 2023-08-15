@@ -18,10 +18,9 @@
         <snakeyaml.version>2.0</snakeyaml.version>
         <mockito.version>5.4.0</mockito.version>
         <junit.version>4.13.2</junit.version>
-        <testcontpost.version>1.18.3</testcontpost.version>
-        <testcontcass.version>1.18.3</testcontcass.version>
+        <testcontainers.postgres.version>1.18.3</testcontainers.postgres.version>
+        <testcontainers.cassandra.version>1.18.3</testcontainers.cassandra.version>
         <datastax.version>4.17.0</datastax.version>
-        <data.path>C:/Users/ASUS/Downloads/bankCurrencies/bankCurrencies/src/main/resources/lib/CassandraJDBC42.jar</data.path>
     </properties>
     
     <dependencies>
@@ -73,13 +72,13 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${testcontpost.version}</version>
+            <version>${testcontainers.postgres.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>cassandra</artifactId>
-            <version>${testcontcass.version}</version>
+            <version>${testcontainers.cassandra.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -106,13 +105,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
-<!--        <dependency> 
-          <groupId>com.simba.cassandra.jdbc42.Driver</groupId> 
-          <artifactId>jdbc42</artifactId>
-          <version>1.0</version>
-          <scope>system</scope> 
-          <systemPath>${data.path}</systemPath> 
-        </dependency>-->
     </dependencies>
     
     <build>
