@@ -12,14 +12,12 @@ public class DatabasesDatasourceConfiguration {
     @Bean
     @ConfigurationProperties("spring.datasource.postgres")
     public DataSourceProperties postgresDataSourceProperties() {
-        System.out.println("Hello postgres");
         return new DataSourceProperties();
     }
     
     @Bean
     @ConfigurationProperties("spring.cassandra")
     public DataSourceProperties cassandraDataSourceConfiguration() {
-        System.out.println("Hello cassandra");
         return new DataSourceProperties();
     }
 }
