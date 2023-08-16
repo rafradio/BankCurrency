@@ -38,5 +38,9 @@ public class Client {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Limit> limits;
+    
+    public Client(Long id) {
+        this.id = id;
+    }
 
 }

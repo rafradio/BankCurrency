@@ -1,0 +1,74 @@
+package com.rafael.bankCurrencies.bankCurrencies;
+
+
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
+import com.rafael.bankCurrencies.bankCurrencies.dao.ClientRepository;
+import com.rafael.bankCurrencies.bankCurrencies.models.Client;
+import org.junit.ClassRule;
+import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+
+@Testcontainers
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration(initializers = {ClientRepositoryTCIntegrationTest.Initializer.class})
+public class ClientRepositoryTCIntegrationTest {
+    
+    @Autowired
+    private ClientRepository clientRepository;
+    
+    public static final int CONTAINERPORT = 5432;
+    public static final int LOCALPORT = 5532;
+    public static final DockerImageName postgres = DockerImageName.parse("postgres:15.4");
+    
+    @ClassRule
+    public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer<>(postgres)
+            .withDatabaseName("bank")
+            .withUsername("postgres")
+            .withPassword("postgres")
+            .withExposedPorts(CONTAINERPORT)
+            .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(
+                    new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(LOCALPORT), new ExposedPort(CONTAINERPORT)))
+            ));;
+
+    static {
+        postgreSQLContainer.start();
+    }
+    
+    static class Initializer
+            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+                @Override
+                public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+                    TestPropertyValues.of(
+                        "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+                        "spring.datasource.username=" + postgreSQLContainer.getUsername(),
+                        "spring.datasource.password=" + postgreSQLContainer.getPassword()
+                      ).applyTo(configurableApplicationContext.getEnvironment());
+                }
+    }
+    
+    @Test
+    public void saveClient() {
+        System.out.println("Hello tests");
+        Client client1 = new Client(1L);
+        clientRepository.save(client1);
+        
+    }
+
+    
+}
