@@ -46,7 +46,7 @@ public class Transaction {
     private Client client;
     
     @ManyToOne
-    @JoinColumn(name="limit_id")
-    private Limit limit;
+    @JoinColumn(name="limits_id")
+    private Limits limits;
     
 }

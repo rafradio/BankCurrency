@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter 
 @NoArgsConstructor
 @AllArgsConstructor
-public class Limit {
+public class Limits {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,7 +44,7 @@ public class Limit {
     @JoinColumn(name="client_id")
     private Client client;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "limit")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "limits")
     private List<Transaction> transactions;
     
 }

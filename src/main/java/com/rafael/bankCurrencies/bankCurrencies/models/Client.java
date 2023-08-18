@@ -37,10 +37,6 @@ public class Client {
     private List<Transaction> transactions;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Limit> limits;
+    private List<Limits> limits_all;
     
-    public Client(Long id) {
-        this.id = id;
-    }
-
 }

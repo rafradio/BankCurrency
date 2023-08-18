@@ -1,6 +1,7 @@
 package com.rafael.bankCurrencies.bankCurrencies;
 
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
@@ -9,13 +10,13 @@ import com.rafael.bankCurrencies.bankCurrencies.dao.ClientRepository;
 import com.rafael.bankCurrencies.bankCurrencies.models.Client;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.GenericContainer;
@@ -23,14 +24,12 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+//@Testcontainers
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 @Testcontainers
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @ContextConfiguration(initializers = {ClientRepositoryTCIntegrationTest.Initializer.class})
-public class ClientRepositoryTCIntegrationTest {
-    
-    @Autowired
-    private ClientRepository clientRepository;
+public abstract class ClientRepositoryTCIntegrationTest {
     
     public static final int CONTAINERPORT = 5432;
     public static final int LOCALPORT = 5532;
@@ -61,14 +60,5 @@ public class ClientRepositoryTCIntegrationTest {
                       ).applyTo(configurableApplicationContext.getEnvironment());
                 }
     }
-    
-    @Test
-    public void saveClient() {
-        System.out.println("Hello tests");
-        Client client1 = new Client(1L);
-        clientRepository.save(client1);
-        
-    }
 
-    
 }

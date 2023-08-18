@@ -17,10 +17,10 @@ databaseChangeLog:
                   name:  created  
                   type:  timestamp 
               -  column:  
-                  name:  accountFrom  
+                  name:  account_from  
                   type:  varchar(10)
               -  column:  
-                  name:  accountTo  
+                  name:  account_to  
                   type:  varchar(10)
               -  column:  
                   name:  sum  
@@ -40,7 +40,7 @@ databaseChangeLog:
                   constraints:   
                     nullable:  false 
               -  column:  
-                  name:  limit_id  
+                  name:  limits_id  
                   type:  bigint
                   constraints:   
                     nullable:  false 
@@ -54,9 +54,9 @@ databaseChangeLog:
             onUpdate:  CASCADE
         -  addForeignKeyConstraint:
             baseTableName: transaction
-            baseColumnNames: limit_id
-            referencedTableName: limit
+            baseColumnNames: limits_id
+            referencedTableName: limits
             referencedColumnNames: id
-            constraintName: limit_transaction_fk
+            constraintName: limits_transaction_fk
             onDelete:  CASCADE  
             onUpdate:  CASCADE
