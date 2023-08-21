@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.rafael.bankCurrencies.bankCurrencies.dao.LimitsRepository;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@SpringBootTest
+//@SpringBootTest
 public class LimitsDAOContTest extends DAOCrudeTests {
     @Autowired
     private LimitsRepository limitsRepository;

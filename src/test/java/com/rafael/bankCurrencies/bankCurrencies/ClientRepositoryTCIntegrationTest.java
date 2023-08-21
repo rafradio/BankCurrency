@@ -24,7 +24,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-//@Testcontainers
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 @Testcontainers
@@ -54,6 +53,7 @@ public abstract class ClientRepositoryTCIntegrationTest {
                 @Override
                 public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
                     TestPropertyValues.of(
+                        "spring.test.database.replace=none",
                         "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                         "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                         "spring.datasource.password=" + postgreSQLContainer.getPassword()
