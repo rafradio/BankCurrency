@@ -12,14 +12,20 @@ import com.rafael.bankCurrencies.bankCurrencies.dao.LimitsRepository;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 //@SpringBootTest
-public class LimitsDAOContTest extends DAOCrudeTests {
+public class LimitsDAOContTest extends JPARepositoryCrudeTests {
     @Autowired
     private LimitsRepository limitsRepository;
     
     @Test
     @Override
-    public void saveDAO() {
-        Limits limit1 = new Limits(3L, LocalDateTime.now(), new BigDecimal("135.69"), 
+    public void ifTableExist() {
+        
+    }
+    
+    @Test
+    @Override
+    public void saveRecords() {
+        Limits limit1 = new Limits(6L, LocalDateTime.now(), new BigDecimal("135.69"), 
                 new BigDecimal("135.69"), "USD", "USD", 
                 new Client(12L, LocalDateTime.now(), "qwertweo10", new ArrayList<>(), new ArrayList<>()),
                 new ArrayList<>());

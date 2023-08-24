@@ -26,3 +26,5 @@ spring:
     properties:
         hibernate:
             format_sql: true
+my.var: Hello world
+#new.var: ${my.properties}

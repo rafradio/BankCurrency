@@ -13,14 +13,20 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 //@SpringBootTest
-public class TransactionDAOContTest extends DAOCrudeTests {
+public class TransactionDAOContTest extends JPARepositoryCrudeTests {
     @Autowired
     private TransactionRepository transactionRepository;
     
     @Test
     @Override
-    public void saveDAO() {
-        Transaction transact1 = new Transaction(3L, LocalDateTime.now(), "qwertweo16", "qwertweo15",
+    public void ifTableExist() {
+        
+    }
+    
+    @Test
+    @Override
+    public void saveRecords() {
+        Transaction transact1 = new Transaction(5L, LocalDateTime.now(), "qwertweo16", "qwertweo15",
                 new BigDecimal("135.69"), "USD", "USD", false, 
                 new Client(12L, LocalDateTime.now(), "qwertweo10", new ArrayList<>(), new ArrayList<>()), 
                 new Limits(3L, LocalDateTime.now(), new BigDecimal("135.69"), new BigDecimal("135.69"), "USD", "USD", new Client(), new ArrayList<>()));

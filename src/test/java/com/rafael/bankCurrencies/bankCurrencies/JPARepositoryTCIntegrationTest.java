@@ -1,6 +1,9 @@
 package com.rafael.bankCurrencies.bankCurrencies;
 
-//import static com.rafael.bankCurrencies.bankCurrencies.ClientRepositoryTCIntegrationTest.CONTAINERPORT;
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,29 +14,31 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-@SpringBootTest
+//@SpringBootTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@DataJpaTest
+@DataJpaTest
 public abstract class JPARepositoryTCIntegrationTest {
     
-    public static final int CONTAINERPORT = 5432;
+    public static final int CONTAINER_PORT = 5432;
     public static final int LOCALPORT = 5532;
-    public static final DockerImageName postgresImage = DockerImageName.parse("postgres:15.4");
+    public static final DockerImageName POSTGRES_IMAGE = DockerImageName.parse("postgres:15.4");
     
     @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(postgresImage)
+    public static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(POSTGRES_IMAGE)
             .withDatabaseName("bank")
             .withUsername("postgres")
             .withPassword("postgres")
-            .withExposedPorts(CONTAINERPORT);
+            .withExposedPorts(CONTAINER_PORT)
+            .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(
+                    new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(LOCALPORT), new ExposedPort(CONTAINER_PORT)))
+            ));
     
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", 
-          () -> String.format("jdbc:postgresql://localhost:%d/bank", postgreSQLContainer.getFirstMappedPort()));
-        registry.add("spring.datasource.username", () -> "postgres");
-        registry.add("spring.datasource.password", () -> "postgres");
+        registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
         
     }
     
