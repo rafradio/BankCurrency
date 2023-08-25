@@ -14,17 +14,17 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-//@SpringBootTest
+@SpringBootTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DataJpaTest
+//@DataJpaTest
 public abstract class JPARepositoryTCIntegrationTest {
     
     public static final int CONTAINER_PORT = 5432;
     public static final int LOCALPORT = 5532;
     public static final DockerImageName POSTGRES_IMAGE = DockerImageName.parse("postgres:15.4");
     
-    @Container
+//    @Container
     public static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(POSTGRES_IMAGE)
             .withDatabaseName("bank")
             .withUsername("postgres")
@@ -34,12 +34,17 @@ public abstract class JPARepositoryTCIntegrationTest {
                     new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(LOCALPORT), new ExposedPort(CONTAINER_PORT)))
             ));
     
+    static {
+        POSTGRE_SQL_CONTAINER.start();
+    }
+    
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
+        System.out.println(" on schema " + POSTGRE_SQL_CONTAINER.getJdbcUrl());
         registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
         
     }
-    
+
 }

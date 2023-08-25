@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.data.domain.Slice;
 
 public class CheckClientDAOContTest extends JPARepositoryCrudeTests {
     @Autowired
@@ -22,28 +26,19 @@ public class CheckClientDAOContTest extends JPARepositoryCrudeTests {
     
     @Test
     @Override
-    public void ifTableExist() throws SQLException {
-        DatabaseMetaData databaseMetaData = POSTGRE_SQL_CONTAINER.createConnection("").getMetaData();
-        ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[] {"TABLE"});
-        
-        System.out.println("Connections" + databaseMetaData.getURL());
-        while (resultSet.next()) {
-            String name = resultSet.getString("TABLE_NAME");
-            String schema = resultSet.getString("TABLE_SCHEM");
-            System.out.println(name + " on schema " + schema);
-        }
-        
-    }
-    
-    
-    @Test
-    @Override
     public void saveRecords() {
         Client client1 = new Client(3L, LocalDateTime.now(), "qwertweo57", 
                 new ArrayList<>(), new ArrayList<>());
         clientRepository.save(client1);
-        
+        Optional<Client> clientResponse =  clientRepository.findById(1L);
+        Client clnt = clientResponse.get();
+        assertThat(clnt.getBankAccountNumber()).as("First test on bankAccountNumber").isEqualTo("qwertweo57");
     }
     
+    @Test
+    @Override
+    public void deleteRecord() {
+        
+    }
     
 }

@@ -12,8 +12,6 @@ import org.springframework.core.env.Environment;
 
 @Configuration
 public class DatabasesDatasourceConfiguration {
-    @Autowired
-    private Environment environment;
     
     @Primary
     @Bean
