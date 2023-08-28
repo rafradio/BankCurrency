@@ -47,6 +47,6 @@ public class Transaction {
     
     @ManyToOne
     @JoinColumn(name="limits_id")
-    private Limits limits;
+    private Limit limits;
     
 }

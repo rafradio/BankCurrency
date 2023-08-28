@@ -18,9 +18,12 @@
         <snakeyaml.version>2.0</snakeyaml.version>
         <mockito.version>5.4.0</mockito.version>
         <junit.version>4.13.2</junit.version>
+        <testcontainers.version>1.18.3</testcontainers.version>
         <testcontainers.postgres.version>1.18.3</testcontainers.postgres.version>
         <testcontainers.cassandra.version>1.18.3</testcontainers.cassandra.version>
+        <testcontainers.junit.jupiter>1.18.3</testcontainers.junit.jupiter>
         <datastax.version>4.17.0</datastax.version>
+        <junit.jupiter.version>5.8.1</junit.jupiter.version>
     </properties>
     
     <dependencies>
@@ -66,19 +69,19 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.18.3</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>1.18.3</version>
+            <version>${testcontainers.junit.jupiter}</version>
             <scope>test</scope>
         </dependency>
 
@@ -123,6 +126,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     

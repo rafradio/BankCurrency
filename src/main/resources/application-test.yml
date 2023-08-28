@@ -1,4 +1,5 @@
 spring:
+  property: This the the application-test.yaml file
   cassandra:
     contact-points: 127.0.0.1
     port: 9042
@@ -14,9 +15,9 @@ spring:
   datasource:
     postgres:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://127.0.0.1:6432/bank
-      username: postgres
-      password: postgres
+      url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 
