@@ -1,0 +1,28 @@
+spring:
+  cassandra:
+    contact-points: ${spring.cassandra.contact-points}
+    port: ${spring.cassandra.port}
+    localDatacenter: datacenter1
+    keyspace-name: ${spring.cassandra.keyspace-name}
+    schema-action: CREATE_IF_NOT_EXISTS
+    request.timeout: 10s
+  #    username: ${spring.cassandra.username}
+  #    password: ${spring.cassandra.password}
+    connection: 
+        connect-timeout: 10s
+        init-query-timeout: 10s
+  datasource:
+    postgres:
+      driver-class-name: org.postgresql.Driver
+      url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  jpa: 
+    show-sql: true
+    hibernate:
+        ddl-auto: none
+    properties:
+        hibernate:
+            format_sql: true

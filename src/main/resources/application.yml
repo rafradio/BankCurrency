@@ -6,8 +6,8 @@ spring:
     keyspace-name: spring_cassandra
     schema-action: CREATE_IF_NOT_EXISTS
     request.timeout: 10s
-#    username: cassandra
-#    password: cassandra
+  #    username: ${spring.cassandra.username}
+  #    password: ${spring.cassandra.password}
     connection: 
         connect-timeout: 10s
         init-query-timeout: 10s
@@ -26,5 +26,3 @@ spring:
     properties:
         hibernate:
             format_sql: true
-my.var: Hello world
-#new.var: ${my.properties}
