@@ -1,9 +1,9 @@
 spring:
   cassandra:
-    contact-points: 127.0.0.1
-    port: 9042
+    contact-points: ${cassandra.contact-points}
+    port: ${cassandra.port}
     localDatacenter: datacenter1
-    keyspace-name: spring_cassandra
+    keyspace-name: ${cassandra.keyspace-name}
     schema-action: CREATE_IF_NOT_EXISTS
     request.timeout: 10s
   #    username: ${spring.cassandra.username}
@@ -14,9 +14,9 @@ spring:
   datasource:
     postgres:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://127.0.0.1:6432/bank
-      username: postgres
-      password: postgres
+      url: ${datasource.postgres.url}
+      username: ${datasource.postgres.username}
+      password: ${datasource.postgres.password}
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa: 
