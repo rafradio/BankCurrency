@@ -1,9 +1,9 @@
 spring:
   cassandra:
-    contact-points: ${spring.cassandra.contact-points}
-    port: ${spring.cassandra.port}
+    contact-points: ${cass.contact-points}
+    port: ${cass.port}
     localDatacenter: datacenter1
-    keyspace-name: ${spring.cassandra.keyspace-name}
+    keyspace-name: ${cass.keyspace-name}
     schema-action: CREATE_IF_NOT_EXISTS
     request.timeout: 10s
   #    username: ${spring.cassandra.username}

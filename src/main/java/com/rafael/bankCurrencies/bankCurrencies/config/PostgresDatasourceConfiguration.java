@@ -18,11 +18,8 @@ import javax.sql.DataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 
 @Configuration
-@EnableTransactionManagement
 @EnableJpaRepositories(
-  basePackages = {"com.rafael.bankCurrencies.bankCurrencies.dao"},
-  entityManagerFactoryRef = "postgresEntityManagerFactory",
-  transactionManagerRef = "postgresTransactionManager"
+  basePackages = {"com.rafael.bankCurrencies.bankCurrencies.dao"}
 )
 public class PostgresDatasourceConfiguration {
     @Bean
@@ -37,21 +34,5 @@ public class PostgresDatasourceConfiguration {
           .initializeDataSourceBuilder()
           .build();
     }
-    
-    @Bean
-    public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
-            @Qualifier("postgresDataSource") DataSource dataSource,
-            EntityManagerFactoryBuilder builder) {
-        return builder
-                .dataSource(dataSource)
-                .packages("com.rafael.bankCurrencies.bankCurrencies.dao")
-                .build();
-    }
-    
-    @Bean
-    public PlatformTransactionManager postgresTransactionManager(
-            @Qualifier("postgresEntityManagerFactory") LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory) {
-        return new JpaTransactionManager(Objects.requireNonNull(postgresEntityManagerFactory.getObject()));
-    }
-    
+
 }

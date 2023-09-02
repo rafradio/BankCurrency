@@ -1,7 +1,6 @@
 package com.rafael.bankCurrencies.bankCurrencies.config;
 
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
-
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -14,45 +13,31 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
+import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 
 @Configuration
-@EnableTransactionManagement
 @EnableCassandraRepositories(
   basePackages = "com.rafael.bankCurrencies.bankCurrencies.cassandra.dao"
 )
-public class CassandraDatasourceConfiguration  {
+public class CassandraDatasourceConfiguration  extends AbstractCassandraConfiguration {
+    @Override
+    protected String getKeyspaceName() {
+        return "spring_cassandra";
+    }
     
+    @Autowired
+    private CassandraOperations cassandraTemplate;
+    
+    @Primary
     @Bean
     @ConfigurationProperties("spring.cassandra")
     public DataSourceProperties cassandraDataSourceProperties() {
         return new DataSourceProperties();
     }
-    
-    @Bean
-    public DataSource cassandraDataSource() {
-        return cassandraDataSourceProperties()
-          .initializeDataSourceBuilder()
-          .build();
-    }
-    
-//    @Bean
-//    public CassandraMappingContext cassandraMapping() 
-//      throws ClassNotFoundException {
-//        return new BasicCassandraMappingContext();
-//    }
-    
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean cassandraEntityManagerFactory(
-//            @Qualifier("cassandraDataSource") DataSource dataSource,
-//            EntityManagerFactoryBuilder builder) {
-//        return builder
-//                .dataSource(dataSource)
-//                .packages("com.rafael.bankCurrencies.bankCurrencies.cassandra.dao")
-//                .build();
-//    }
-    
-    
     
 }

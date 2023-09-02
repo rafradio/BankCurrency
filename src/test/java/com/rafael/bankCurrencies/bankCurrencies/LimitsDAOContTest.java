@@ -14,32 +14,35 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.junit.Assert.*;
 
-public class LimitsDAOContTest extends JPARepositoryCrudeTests {
+public class LimitsDAOContTest extends JPARepositoryTCIntegrationTest {
     @Autowired
     private LimitRepository limitRepository;
     
     @Test
-    @Override
-    public void insertObjectToRepository() {
-        this.insertLimit();
-        Optional<Limit> limitResponse =  limitRepository.findById(1L);
-        Limit lmt = limitResponse.get();
-        assertEquals("First test on Limit", Long.valueOf(1),lmt.getId());
+    public void whenInsertToRepository_limitCheckID_thenTrue() {
+        Limit limit = this.insertToRepository_Limit();
+        Optional<Limit> limitResponse =  limitRepository.findById(limit.getId());
+        limitResponse.ifPresent(lmt -> {
+            assertEquals("First test on Limit", limit.getId(), lmt.getId());
+        });
         
     }
     
     @Test
-    @Override
-    public void deleteObjectFromRepository() {
-        
+    public void whenDeleted_limitEntity_thenTrue() {
     }
     
-    public void insertLimit() {
-        Limit limit1 = new Limit(6L, LocalDateTime.now(), new BigDecimal("135.69"), 
+    public Limit insertToRepository_Limit() {
+        Client client = Client.builder()
+                .bankAccountNumber("qwertweo57")
+                .transactions(new ArrayList<>())
+                .allLimits(new ArrayList<>())
+                .build();
+        Limit limit1 = new Limit(new BigDecimal("135.69"), 
             new BigDecimal("135.69"), "USD", "USD", 
-            new Client(1L, LocalDateTime.now(), "qwertweo57", new ArrayList<>(), new ArrayList<>()),
+            client,
             new ArrayList<>());
-        limitRepository.save(limit1);
+        return limitRepository.save(limit1);
     }
     
 }

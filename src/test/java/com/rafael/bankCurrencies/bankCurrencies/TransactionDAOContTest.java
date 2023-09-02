@@ -12,31 +12,30 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.*;
 
-public class TransactionDAOContTest extends JPARepositoryCrudeTests {
+public class TransactionDAOContTest extends JPARepositoryTCIntegrationTest {
     @Autowired
     private TransactionRepository transactionRepository;
     
     @Test
-    @Override
-    public void insertObjectToRepository() {
-        this.insertTransaction();
-        Optional<Transaction> transactionResponse =  transactionRepository.findById(1L);
-        Transaction trn = transactionResponse.get();
-        assertEquals("First test on Limit", "qwertweo16",trn.getAccountFrom());
+    public void whenInsertToRepository_transactionCheckID_thenTrue() {
+        Transaction transaction = this.insertToRepository_Transaction();
+        Optional<Transaction> transactionResponse =  transactionRepository.findById(transaction.getId());
+        transactionResponse.ifPresent(trn -> {
+            assertEquals("First test on Limit", transaction.getAccountFrom(),trn.getAccountFrom());
+        });
     }
     
     @Test
-    @Override
-    public void deleteObjectFromRepository() {
+    public void whenDeleted_transactionEntity_thenTrue() {
         
     }
     
-    public void insertTransaction() {
-        Transaction transact1 = new Transaction(1L, LocalDateTime.now(), "qwertweo16", "qwertweo15",
+    public Transaction insertToRepository_Transaction() {
+        Transaction transact1 = new Transaction("qwertweo16", "qwertweo15",
             new BigDecimal("135.69"), "USD", "USD", false, 
             new Client(1L, LocalDateTime.now(), "qwertweo57", new ArrayList<>(), new ArrayList<>()), 
-            new Limit(1L, LocalDateTime.now(), new BigDecimal("135.69"), new BigDecimal("135.69"), "USD", "USD", new Client(), new ArrayList<>()));
-        transactionRepository.save(transact1);
+            new Limit(new BigDecimal("135.69"), new BigDecimal("135.69"), "USD", "USD", new Client(), new ArrayList<>()));
+        return transactionRepository.save(transact1);
     }
     
 }

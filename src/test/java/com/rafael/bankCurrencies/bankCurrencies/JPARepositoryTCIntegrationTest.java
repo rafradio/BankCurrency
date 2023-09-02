@@ -1,16 +1,36 @@
 package com.rafael.bankCurrencies.bankCurrencies;
 
+//import com.datastax.driver.core.Cluster;
+//import com.datastax.driver.core.Session;
+//import com.github.dockerjava.api.model.ExposedPort;
+//import com.github.dockerjava.api.model.HostConfig;
+//import com.github.dockerjava.api.model.PortBinding;
+//import com.github.dockerjava.api.model.Ports;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.ActiveProfiles;
+//import org.springframework.test.context.DynamicPropertyRegistry;
+//import org.springframework.test.context.DynamicPropertySource;
+//import org.testcontainers.containers.CassandraContainer;
+//import org.testcontainers.containers.PostgreSQLContainer;
+//import org.testcontainers.junit.jupiter.Container;
+//import org.testcontainers.junit.jupiter.Testcontainers;
+//import org.testcontainers.utility.DockerImageName;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeAll;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.CassandraContainer;
@@ -18,12 +38,13 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import javax.sql.DataSource;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @Testcontainers
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@ActiveProfiles(value = "test")
-//@DataJpaTest
+@ActiveProfiles(value = "test")
 public abstract class JPARepositoryTCIntegrationTest {
     
     public static final int CONTAINER_PORT = 5432;
@@ -40,6 +61,10 @@ public abstract class JPARepositoryTCIntegrationTest {
                     new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(LOCALPORT), new ExposedPort(CONTAINER_PORT)))
             ));
     
+    @Container
+    public static final CassandraContainer cassandra 
+      = (CassandraContainer) new CassandraContainer("cassandra:latest").withExposedPorts(9042);
+    
     static {
         POSTGRE_SQL_CONTAINER.start();
     }
@@ -51,11 +76,11 @@ public abstract class JPARepositoryTCIntegrationTest {
         registry.add("datasource.postgres.username", POSTGRE_SQL_CONTAINER::getUsername);
         registry.add("datasource.postgres.password", POSTGRE_SQL_CONTAINER::getPassword);
         
+        registry.add("cass.contact-points", cassandra::getContainerIpAddress);
+        registry.add("cass.keyspace-name", "spring_cassandra"::toString);
+        Integer val1 = cassandra.getMappedPort(9042);
+        registry.add("cass.port", val1::toString);
     }
-    
-    @Container
-    public static final CassandraContainer cassandra 
-      = (CassandraContainer) new CassandraContainer("cassandra:latest").withExposedPorts(9042);
     
     private static void createKeyspace(Cluster cluster) {
         try (Session session = cluster.connect()) {
@@ -65,12 +90,12 @@ public abstract class JPARepositoryTCIntegrationTest {
         }
     }
     
-    @BeforeAll
-    static void setupCassandraConnectionProperties() {
-        System.setProperty("cassandra.keyspace-name", "spring_cassandra");
-        System.setProperty("cassandra.contact-points", cassandra.getContainerIpAddress());
-        System.setProperty("cassandra.port", String.valueOf(cassandra.getMappedPort(9042)));
-//        createKeyspace(cassandra.getCluster());
-    }
+//    @BeforeAll
+//    static void setupCassandraConnectionProperties() {
+//        System.setProperty("cassandra.keyspace-name", "spring_cassandra");
+//        System.setProperty("cassandra.contact-points", cassandra.getContainerIpAddress());
+//        System.setProperty("cassandra.port", String.valueOf(cassandra.getMappedPort(9042)));
+//
+//    }
 
 }

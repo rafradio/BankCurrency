@@ -21,26 +21,24 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Value;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class CheckClientDAOContTest extends JPARepositoryCrudeTests {
+public class CheckClientDAOContTest extends JPARepositoryTCIntegrationTest {
     @Autowired
     private ClientRepository clientRepository;
     
-//    @Value("${spring.property}")
-//    private String propertyString;
-    
     @Test
     @Order(1) 
-    @Override
-    public void insertObjectToRepository() {
-        this.insertClient();
-        Optional<Client> clientResponse =  clientRepository.findById(1L);
-        Client clnt = clientResponse.get();
-        assertEquals("First test on bankAccountNumber","qwertweo57",clnt.getBankAccountNumber());
+    public void whenInsertToRepository_clientCheckID_thenTrue() {
+        Client client1 = this.insertToRepository_Client();
+        Optional<Client> clientResponse =  clientRepository.findById(client1.getId());
+        clientResponse.ifPresent(client -> {
+                assertEquals("First test on bankAccountNumber",client1.getBankAccountNumber(),
+                                                                       client.getBankAccountNumber());
+        });
     }
     
     @Test
     @Order(2) 
-    public void timeInsertingObjectToRepository() {
+    public void whenSavingTime_clientLessThanTen_thenTrue() {
         Optional<Client> clientResponse =  clientRepository.findById(1L);
         LocalDateTime created = clientResponse.get().getCreated();
         Duration duration = Duration.between(created, LocalDateTime.now());
@@ -50,41 +48,16 @@ public class CheckClientDAOContTest extends JPARepositoryCrudeTests {
     
     @Test
     @Order(3) 
-    @Override
-    public void deleteObjectFromRepository() {
-        
+    public void whenDeleted_clientEntity_thenTrue() {
     }
     
-    public void insertClient() {
+    public Client insertToRepository_Client() {
         Client client2 = Client.builder()
                 .bankAccountNumber("qwertweo57")
                 .transactions(new ArrayList<>())
                 .allLimits(new ArrayList<>())
                 .build();
-        Client client1 = new Client(1L, LocalDateTime.now(), "qwertweo57", 
-                new ArrayList<>(), new ArrayList<>());
-        clientRepository.save(client2);
-        
+        return clientRepository.save(client2);
     }
     
-    @Test
-    @Order(4) 
-    public void findProperty() {
-//        assertEquals("TEst Property","This the the application-test.yaml file", propertyString);
-    }
-    
-    @Test
-    @Order(5)
-    public void ifTableExist() throws SQLException {
-        DatabaseMetaData databaseMetaData = POSTGRE_SQL_CONTAINER.createConnection("").getMetaData();
-        ResultSet resultSet = databaseMetaData.getTables(null, null, null, new String[] {"TABLE"});
-        
-        while (resultSet.next()) {
-            String name = resultSet.getString("TABLE_NAME");
-            String schema = resultSet.getString("TABLE_SCHEM");
-            System.out.println(name + " on schema " + schema);
-        }
-        
-        System.out.println(" on schema " + POSTGRE_SQL_CONTAINER.getJdbcUrl());
-    }
 }

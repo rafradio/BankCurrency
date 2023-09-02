@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="limits")
@@ -30,6 +31,7 @@ public class Limit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @CreationTimestamp
     private LocalDateTime created;
     
     private BigDecimal sum;
@@ -46,5 +48,17 @@ public class Limit {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "limits")
     private List<Transaction> transactions;
+
+    public Limit(BigDecimal sum, BigDecimal remaining, String currencyShortname,
+            String expenseCategory, Client client, List<Transaction> transactions) {
+        this.sum = sum;
+        this.remaining = remaining;
+        this.currencyShortname = currencyShortname;
+        this.expenseCategory = expenseCategory;
+        this.client = client;
+        this.transactions = transactions;
+    }
+    
+    
     
 }
