@@ -24,15 +24,7 @@ import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 @EnableCassandraRepositories(
   basePackages = "com.rafael.bankCurrencies.bankCurrencies.cassandra.dao"
 )
-public class CassandraDatasourceConfiguration  extends AbstractCassandraConfiguration {
-    @Override
-    protected String getKeyspaceName() {
-        return "spring_cassandra";
-    }
-    
-    @Autowired
-    private CassandraOperations cassandraTemplate;
-    
+public class CassandraDatasourceConfiguration {
     @Primary
     @Bean
     @ConfigurationProperties("spring.cassandra")

@@ -15,6 +15,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
+import org.springframework.context.annotation.Primary;
 import org.springframework.orm.jpa.JpaTransactionManager;
 
 @Configuration
@@ -22,12 +23,14 @@ import org.springframework.orm.jpa.JpaTransactionManager;
   basePackages = {"com.rafael.bankCurrencies.bankCurrencies.dao"}
 )
 public class PostgresDatasourceConfiguration {
+    @Primary
     @Bean
     @ConfigurationProperties("spring.datasource.postgres")
     public DataSourceProperties postgresDataSourceProperties() {
         return new DataSourceProperties();
     }
     
+    @Primary
     @Bean
     public DataSource postgresDataSource() {
         return postgresDataSourceProperties()

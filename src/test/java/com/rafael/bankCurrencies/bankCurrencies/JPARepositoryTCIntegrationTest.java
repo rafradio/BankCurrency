@@ -21,6 +21,7 @@ package com.rafael.bankCurrencies.bankCurrencies;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
@@ -77,6 +78,7 @@ public abstract class JPARepositoryTCIntegrationTest {
         registry.add("datasource.postgres.password", POSTGRE_SQL_CONTAINER::getPassword);
         
         registry.add("cass.contact-points", cassandra::getContainerIpAddress);
+        registry.add("cass.datacenter", cassandra::getLocalDatacenter);
         registry.add("cass.keyspace-name", "spring_cassandra"::toString);
         Integer val1 = cassandra.getMappedPort(9042);
         registry.add("cass.port", val1::toString);
