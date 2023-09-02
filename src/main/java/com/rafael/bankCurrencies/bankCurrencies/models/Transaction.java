@@ -9,11 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter 
@@ -25,12 +27,13 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @CreationTimestamp
     private LocalDateTime created;
     
-    @Column(length=10)
+    @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
     private String accountFrom;
     
-    @Column(length=10)
+    @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
     private String accountTo;
     
     private BigDecimal sum;
@@ -46,7 +49,21 @@ public class Transaction {
     private Client client;
     
     @ManyToOne
-    @JoinColumn(name="limit_id")
-    private Limit limit;
+    @JoinColumn(name="limits_id")
+    private Limit limits;
+
+    public Transaction(String accountFrom, String accountTo, BigDecimal sum, 
+            String currencyShortname, String expenseCategory, Boolean exceeded, Client client, Limit limits) {
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.sum = sum;
+        this.currencyShortname = currencyShortname;
+        this.expenseCategory = expenseCategory;
+        this.exceeded = exceeded;
+        this.client = client;
+        this.limits = limits;
+    }
+    
+    
     
 }

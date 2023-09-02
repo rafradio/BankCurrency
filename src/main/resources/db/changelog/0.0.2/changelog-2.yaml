@@ -1,10 +1,10 @@
 databaseChangeLog:  
   -  changeSet:  
-      id:  1  
+      id:  2  
       author:  rafael  
       changes:  
         -  createTable:  
-            tableName:  limit  
+            tableName:  limits  
             columns:  
               -  column:  
                   name:  id  
@@ -34,11 +34,11 @@ databaseChangeLog:
                   constraints:   
                     nullable:  false 
         -  addForeignKeyConstraint:
-            baseTableName: limit
+            baseTableName: limits
             baseColumnNames: client_id
             referencedTableName: client
             referencedColumnNames: id
-            constraintName: client_limit_fk
+            constraintName: client_limits_fk
             onDelete:  CASCADE  
             onUpdate:  CASCADE
 

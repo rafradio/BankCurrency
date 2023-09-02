@@ -9,8 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.time.Instant;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter 
 @Setter 
+@Builder
 @NoArgsConstructor 
 @AllArgsConstructor
 public class Client {
@@ -30,13 +32,14 @@ public class Client {
     @CreationTimestamp
     private LocalDateTime created;
     
-    @Column(unique=true, length=10)
+    @Column(unique=true)
+    @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
     private String bankAccountNumber;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Transaction> transactions;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Limit> limits;
-
+    private List<Limit> allLimits;
+    
 }

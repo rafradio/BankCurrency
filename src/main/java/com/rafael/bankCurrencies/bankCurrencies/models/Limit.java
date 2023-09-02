@@ -15,12 +15,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
+@Table(name="limits")
 @Getter 
 @Setter 
 @NoArgsConstructor
@@ -30,6 +31,7 @@ public class Limit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @CreationTimestamp
     private LocalDateTime created;
     
     private BigDecimal sum;
@@ -44,7 +46,19 @@ public class Limit {
     @JoinColumn(name="client_id")
     private Client client;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "limit")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "limits")
     private List<Transaction> transactions;
+
+    public Limit(BigDecimal sum, BigDecimal remaining, String currencyShortname,
+            String expenseCategory, Client client, List<Transaction> transactions) {
+        this.sum = sum;
+        this.remaining = remaining;
+        this.currencyShortname = currencyShortname;
+        this.expenseCategory = expenseCategory;
+        this.client = client;
+        this.transactions = transactions;
+    }
+    
+    
     
 }
