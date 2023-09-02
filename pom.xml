@@ -22,7 +22,6 @@
         <testcontainers.postgres.version>1.18.3</testcontainers.postgres.version>
         <testcontainers.cassandra.version>1.18.3</testcontainers.cassandra.version>
         <testcontainers.junit.jupiter>1.18.3</testcontainers.junit.jupiter>
-        <datastax.version>4.17.0</datastax.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
     </properties>
     
@@ -49,16 +48,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-cassandra</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.datastax.oss</groupId>
-            <artifactId>java-driver-core</artifactId>
-            <version>${datastax.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.datastax.cassandra</groupId>
-            <artifactId>cassandra-driver-core</artifactId>
-            <version>2.1.9</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -128,10 +117,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>

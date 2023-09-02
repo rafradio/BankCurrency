@@ -1,4 +1,4 @@
-package com.rafael.bankCurrencies.bankCurrencies.models;
+package com.rafael.bankCurrencies.models;
 
 import jakarta.persistence.Column;
 import java.math.BigDecimal;

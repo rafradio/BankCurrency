@@ -1,4 +1,4 @@
-package com.rafael.bankCurrencies.bankCurrencies;
+package com.rafael.bankCurrencies;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

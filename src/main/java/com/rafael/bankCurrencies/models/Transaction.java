@@ -1,19 +1,15 @@
-package com.rafael.bankCurrencies.bankCurrencies.models;
-
+package com.rafael.bankCurrencies.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +17,11 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name="limits")
 @Getter 
 @Setter 
-@NoArgsConstructor
+@NoArgsConstructor 
 @AllArgsConstructor
-public class Limit {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,29 +29,38 @@ public class Limit {
     @CreationTimestamp
     private LocalDateTime created;
     
-    private BigDecimal sum;
+    @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
+    private String accountFrom;
     
-    private BigDecimal remaining;
+    @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
+    private String accountTo;
+    
+    private BigDecimal sum;
     
     private String currencyShortname;
     
     private String expenseCategory;
     
+    private Boolean exceeded;
+    
     @ManyToOne
     @JoinColumn(name="client_id")
     private Client client;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "limits")
-    private List<Transaction> transactions;
+    @ManyToOne
+    @JoinColumn(name="limits_id")
+    private Limit limits;
 
-    public Limit(BigDecimal sum, BigDecimal remaining, String currencyShortname,
-            String expenseCategory, Client client, List<Transaction> transactions) {
+    public Transaction(String accountFrom, String accountTo, BigDecimal sum, 
+            String currencyShortname, String expenseCategory, Boolean exceeded, Client client, Limit limits) {
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.sum = sum;
-        this.remaining = remaining;
         this.currencyShortname = currencyShortname;
         this.expenseCategory = expenseCategory;
+        this.exceeded = exceeded;
         this.client = client;
-        this.transactions = transactions;
+        this.limits = limits;
     }
     
     

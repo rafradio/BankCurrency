@@ -1,6 +1,6 @@
-package com.rafael.bankCurrencies.bankCurrencies.dao;
+package com.rafael.bankCurrencies.repository.postgres;
 
-import com.rafael.bankCurrencies.bankCurrencies.models.Limit;
+import com.rafael.bankCurrencies.models.Limit;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

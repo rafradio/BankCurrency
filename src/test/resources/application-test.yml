@@ -1,28 +1,18 @@
 spring:
   datasource:
-    postgres:
-      driver-class-name: org.postgresql.Driver
-      url: ${datasource.postgres.url}
-      username: ${datasource.postgres.username}
-      password: ${datasource.postgres.password}
+    driver-class-name: org.postgresql.Driver
   cassandra:
-    contact-points: ${cass.contact-points}
-    port: ${cass.port}
-    localDatacenter: ${cass.datacenter}
-    keyspace-name: ${cass.keyspace-name}
     schema-action: CREATE_IF_NOT_EXISTS
     request.timeout: 10s
-#      username: ${cassandra.username}
-#      password: ${cassandra.password}
-    connection: 
+    connection:
       connect-timeout: 10s
       init-query-timeout: 10s
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
-  jpa: 
+  jpa:
     show-sql: true
     hibernate:
-        ddl-auto: none
+      ddl-auto: none
     properties:
-        hibernate:
-            format_sql: true
+      hibernate:
+        format_sql: true
