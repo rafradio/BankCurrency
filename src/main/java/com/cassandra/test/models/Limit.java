@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="limits")
@@ -29,7 +29,7 @@ public class Limit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @CreationTimestamp
+    @CreationTimestamp
     private LocalDateTime created;
     
     private BigDecimal sum;

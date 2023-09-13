@@ -25,10 +25,10 @@
                 <junit.jupiter.version>5.8.1</junit.jupiter.version>
 	</properties>
 	<dependencies>
-		<dependency>
+<!--		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -80,9 +80,13 @@
                     <scope>test</scope>
                 </dependency>
                 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-cassandra</artifactId>
+		</dependency>
+<!--                <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-cassandra-reactive</artifactId>
-		</dependency>
+		</dependency>-->
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -102,16 +106,25 @@
                     <version>3.0.2</version>
                     <type>jar</type>
                 </dependency>
-<!--                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-cassandra</artifactId>
-                </dependency>-->
                 <dependency>
-                 <groupId>jakarta.persistence</groupId>
-                 <artifactId>jakarta.persistence-api</artifactId>
-                 <version>3.1.0</version>
-                 <type>jar</type>
+                    <groupId>jakarta.persistence</groupId>
+                    <artifactId>jakarta.persistence-api</artifactId>
+                    <version>3.1.0</version>
+                    <type>jar</type>
                 </dependency>
+<!--                <dependency>
+                    <groupId>org.junit-pioneer</groupId>
+                    <artifactId>junit-pioneer</artifactId>
+                    <version>2.0.1</version>
+                    <scope>test</scope>
+                </dependency>-->
+	 <dependency>
+	  <groupId>org.junit.jupiter</groupId>
+	  <artifactId>junit-jupiter-api</artifactId>
+	  <version>5.10.0</version>
+	  <scope>test</scope>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>

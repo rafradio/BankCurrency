@@ -15,7 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter 
@@ -28,7 +28,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @CreationTimestamp
+    @CreationTimestamp
     private LocalDateTime created;
     
     @Column(unique=true)

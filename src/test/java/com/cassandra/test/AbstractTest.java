@@ -1,6 +1,9 @@
 package com.cassandra.test;
 
 import com.cassandra.test.models.Client;
+import com.cassandra.test.models.Limit;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,6 +26,11 @@ public abstract class AbstractTest {
     protected static final Client CLIENT_1 = Client.builder()
             .bankAccountNumber("0000011111")
             .build();
+    
+    protected static final Limit LIMIT_1 = new Limit(new BigDecimal("135.69"), 
+            new BigDecimal("135.69"), "USD", "USD", 
+            CLIENT_1,
+            new ArrayList<>());
     
     public static final PostgreSQLContainer<?> POSTGRES_CONTAINER = new PostgreSQLContainer<>(POSTGRES_IMAGE)
             .withDatabaseName("bank")

@@ -8,7 +8,7 @@ spring:
     contact-points: ${cass.contact-points}
     port: ${cass.port}
     localDatacenter: datacenter1
-    keyspace-name: bank_currencies
+    keyspace-name: ${cass.keyspace-name}
     schema-action: CREATE_IF_NOT_EXISTS
     request.timeout: 10s
 #      username: ${cassandra.username}

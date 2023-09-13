@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter 
@@ -25,7 +25,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @CreationTimestamp
+    @CreationTimestamp
     private LocalDateTime created;
     
     @Pattern(regexp = "\\d{10}", message = "bankAccountNumber must be 10 length only digits")
