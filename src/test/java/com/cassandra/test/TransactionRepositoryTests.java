@@ -45,7 +45,34 @@ public class TransactionRepositoryTests extends AbstractTest {
                 long diff = Math.abs(duration.toSeconds());
                 assertTrue(diff <= 10);
             }, () -> {
-                throw new IllegalStateException("The limit wasn't found");
+                throw new IllegalStateException("The transaction wasn't found");
             });
     }
+    
+    @Test
+    public void whenUpdateRepository_checkTransactionTimeUpdate_thenTrue() {
+        transactionRepository.findById(TRANSACTION_1.getId())
+            .ifPresentOrElse(trn -> {
+                LocalDateTime firstTimeCreation = trn.getCreated();
+                trn.setCreated(LocalDateTime.now());
+                LocalDateTime secontTimeUpdated = transactionRepository.save(trn).getCreated();
+                Duration duration = Duration.between(firstTimeCreation, secontTimeUpdated);
+                long diff = Math.abs(duration.toMillis());
+                assertTrue(diff > 0);
+            },() -> {
+                throw new IllegalStateException("The transaction wasn't found");
+            });
+    }
+    
+    @Test
+    public void whenDeleteRepository_checkTransaction_thenTrue() {
+        transactionRepository.delete(TRANSACTION_1);
+        transactionRepository.findById(TRANSACTION_1.getId())
+            .ifPresentOrElse(trn -> {
+                assertTrue(false);
+            }, () -> {
+                assertTrue(true);
+            });
+    }
+    
 }

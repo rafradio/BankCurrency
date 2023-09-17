@@ -13,12 +13,16 @@ import java.util.Arrays;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 //import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
+import org.junit.jupiter.api.Order;
 
 @DirtiesContext
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LimitRepositoryTest extends AbstractTest {
     
     @Autowired
@@ -35,6 +39,7 @@ public class LimitRepositoryTest extends AbstractTest {
     }
     
     @Test
+    @Order(1)
     public void whenInsertToRepository_getLimitById_thenTrue() {
         limitRepository.findById(LIMIT_1.getId())
             .ifPresentOrElse(lm -> {
@@ -45,6 +50,7 @@ public class LimitRepositoryTest extends AbstractTest {
     }
     
     @Test
+    @Order(2)
     public void whenInsertToRepository_checkLimitTimeCreation_lessThanTenSec_thenTrue() {
         limitRepository.findById(LIMIT_1.getId())
             .ifPresentOrElse(limit -> {
@@ -56,4 +62,33 @@ public class LimitRepositoryTest extends AbstractTest {
                 throw new IllegalStateException("The limit wasn't found");
             });
     }
+    
+    @Test
+    @Order(3)
+    public void whenDeleteRepository_checkLimit_thenTrue() {
+        limitRepository.delete(LIMIT_1);
+        limitRepository.findById(LIMIT_1.getId())
+            .ifPresentOrElse(limit -> {
+                assertTrue(false);
+            }, () -> {
+                assertTrue(true);
+            });
+    }
+    
+    @Test
+    @Order(4)
+    public void whenUpdateRepository_checkLimitTimeUpdate_thenTrue() {
+        limitRepository.findById(LIMIT_1.getId())
+            .ifPresentOrElse(limit -> {
+                LocalDateTime firstTimeCreation = limit.getCreated();
+                limit.setCreated(LocalDateTime.now());
+                LocalDateTime secontTimeUpdated = limitRepository.save(limit).getCreated();
+                Duration duration = Duration.between(firstTimeCreation, secontTimeUpdated);
+                long diff = Math.abs(duration.toMillis());
+                assertTrue(diff > 0);
+            }, () -> {
+                throw new IllegalStateException("The limit wasn't found");
+            });
+    }
+  
 }
